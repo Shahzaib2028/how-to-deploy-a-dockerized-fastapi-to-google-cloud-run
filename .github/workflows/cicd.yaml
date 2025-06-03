@@ -3,7 +3,10 @@ name: Deploy to Cloud Run
 env:
   SERVICE_NAME: custom-fastapi-service
   PROJECT_ID: projectx-298909
-  DOCKER_IMAGE_URL: asia-southeast1-docker.pkg.dev/projectx-298909/proxima-registry
+  IMAGE_NAME: fastapi-app
+  REGION: asia-southeast1
+  REPOSITORY: proxima-registry
+  DOCKER_IMAGE_URL: asia-southeast1-docker.pkg.dev/projectx-298909/proxima-registry/fastapi-app
 
 on:
   push:
@@ -30,21 +33,19 @@ jobs:
       - name: Set up Cloud SDK
         uses: 'google-github-actions/setup-gcloud@v2'
 
-      - name: Configure Docker
+      - name: Configure Docker for Artifact Registry
         run: |
-          
+          gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev
 
       - name: Build and Push Docker Image
         run: |
-          docker build -t ${{ env.DOCKER_IMAGE_URL }}:latest -f Dockerfile.prod
-          docker tag my-app asia-southeast1-docker.pkg.dev/projectx-298909/proxima-registry
+          docker build -t ${{ env.DOCKER_IMAGE_URL }}:latest -f Dockerfile.prod .
           docker push ${{ env.DOCKER_IMAGE_URL }}:latest
 
       - name: Deploy to Cloud Run
         run: |
-          echo SERVICE_NAME $SERVICE_NAME
-          gcloud run deploy $SERVICE_NAME \
+          gcloud run deploy ${{ env.SERVICE_NAME }} \
             --image ${{ env.DOCKER_IMAGE_URL }}:latest \
             --platform managed \
-            --region asia-southeast1 \
+            --region ${{ env.REGION }} \
             --allow-unauthenticated
