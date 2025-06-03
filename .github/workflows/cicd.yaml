@@ -32,11 +32,12 @@ jobs:
 
       - name: Configure Docker
         run: |
-          gcloud auth configure-docker asia-southeast1-docker.pkg.dev
+          
 
       - name: Build and Push Docker Image
         run: |
-          docker build -t ${{ env.DOCKER_IMAGE_URL }}:latest -f Dockerfile.prod .
+          docker build -t ${{ env.DOCKER_IMAGE_URL }}:latest -f Dockerfile.prod
+          docker tag my-app asia-southeast1-docker.pkg.dev/projectx-298909/proxima-registry
           docker push ${{ env.DOCKER_IMAGE_URL }}:latest
 
       - name: Deploy to Cloud Run
