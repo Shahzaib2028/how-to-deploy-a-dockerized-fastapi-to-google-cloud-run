@@ -2,8 +2,8 @@ name: Deploy to Cloud Run
 
 env:
   SERVICE_NAME: custom-fastapi-service
-  PROJECT_ID: h-t-d-a-f-a-t-g-c-r
-  DOCKER_IMAGE_URL: us-central1-docker.pkg.dev/h-t-d-a-f-a-t-g-c-r/custom-fastapi/custom-fastapi
+  PROJECT_ID: ProjectX
+  DOCKER_IMAGE_URL: asia-southeast1-docker.pkg.dev/projectx-298909/proxima-registry
 
 on:
   push:
@@ -32,7 +32,7 @@ jobs:
 
       - name: Configure Docker
         run: |
-          gcloud auth configure-docker us-central1-docker.pkg.dev
+          gcloud auth configure-docker asia-southeast1-docker.pkg.dev
 
       - name: Build and Push Docker Image
         run: |
@@ -45,5 +45,5 @@ jobs:
           gcloud run deploy $SERVICE_NAME \
             --image ${{ env.DOCKER_IMAGE_URL }}:latest \
             --platform managed \
-            --region us-east1 \
+            --region asia-southeast1 \
             --allow-unauthenticated
