@@ -6,7 +6,7 @@ spec:
   template:
     spec:
       containers:
-        - image: us-central1-docker.pkg.dev/h-t-d-a-f-a-t-g-c-r/custom-fastapi/custom-fastapi:latest
+        - image: asia-southeast1-docker.pkg.dev/projectx-298909/proxima-registry/fastapi-app:latest
           env:
           ports:
-            - containerPort: 4000
+            - containerPort: 8080
