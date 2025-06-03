@@ -2,7 +2,7 @@ name: Deploy to Cloud Run
 
 env:
   SERVICE_NAME: custom-fastapi-service
-  PROJECT_ID: ProjectX
+  PROJECT_ID: projectx-298909
   DOCKER_IMAGE_URL: asia-southeast1-docker.pkg.dev/projectx-298909/proxima-registry
 
 on:
