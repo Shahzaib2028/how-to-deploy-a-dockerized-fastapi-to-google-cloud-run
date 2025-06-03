@@ -42,10 +42,10 @@ jobs:
           docker build -t ${{ env.DOCKER_IMAGE_URL }}:latest -f Dockerfile.prod .
           docker push ${{ env.DOCKER_IMAGE_URL }}:latest
 
-      - name: Deploy to Cloud Run
-        run: |
-          gcloud run deploy ${{ env.SERVICE_NAME }} \
-            --image ${{ env.DOCKER_IMAGE_URL }}:latest \
-            --platform managed \
-            --region ${{ env.REGION }} \
-            --allow-unauthenticated
+      # - name: Deploy to Cloud Run
+      #   run: |
+      #     gcloud run deploy ${{ env.SERVICE_NAME }} \
+      #       --image ${{ env.DOCKER_IMAGE_URL }}:latest \
+      #       --platform managed \
+      #       --region ${{ env.REGION }} \
+      #       --allow-unauthenticated
